@@ -27,4 +27,14 @@ public class GlobalExceptionHandler {
                 "time", LocalDateTime.now()
         );
     }
+
+    @ExceptionHandler(DuplicateResourceException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, Object> handleDuplicate(DuplicateResourceException ex) {
+        return Map.of(
+                "status", 409,
+                "message", ex.getMessage(),
+                "time", LocalDateTime.now()
+        );
+    }
 }
