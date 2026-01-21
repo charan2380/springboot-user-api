@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(
@@ -10,8 +12,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Name must not be blank")
     private String name;
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "Email must not be blank")
+    @Email(message = "Email must be valid")
     private String email;
 
     public String getName() {

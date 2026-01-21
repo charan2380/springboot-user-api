@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,7 +15,8 @@ public class UserControllerV2 {
 
 
     @PostMapping
-    public User create(@RequestBody User user){
-        return service.createUser(user);
+    public ResponseEntity<User> create(@RequestBody User user) {
+        User savedUser = service.createUser(user);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 }

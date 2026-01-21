@@ -2,7 +2,10 @@
 package com.example.demo.controller;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -16,36 +19,39 @@ public class UserControllerV1 {
     }
 
 
-    @PostMapping public User create(@RequestBody User user){
-        return service.createUser(user);
+    @PostMapping
+    public ResponseEntity<User> create(@Valid @RequestBody User user) {
+        User savedUser = service.createUser(user);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
 
-    @GetMapping("/{id}") public User get(@PathVariable Long id){
-        return service.getUserById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<User> get(@PathVariable Long id) {
+        User user = service.getUserById(id);
+        return ResponseEntity.ok(user); // 200 OK
     }
 
 
-    @GetMapping public List<User> getAll(){
-        return service.getAllUsers();
+    @GetMapping
+    public ResponseEntity<List<User>> getAll() {
+        return ResponseEntity.ok(service.getAllUsers());
     }
 
-    //devtool testing
-  /*  @GetMapping("/test")
-    public String test() {
-        return "DEVTOOLS WORKING - V1";
-    }*/
 
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id,
-                           @RequestBody User user) {
-        return service.updateUser(id, user);
+    public ResponseEntity<User> update(
+            @PathVariable Long id,
+            @Valid @RequestBody User user) {
+
+        User updatedUser = service.updateUser(id, user);
+        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         service.deleteUser(id);
-        return "User deleted successfully with id " + id;
+        return ResponseEntity.ok("User deleted successfully with id " + id);
     }
 }
