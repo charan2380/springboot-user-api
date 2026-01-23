@@ -27,7 +27,13 @@ public class UserServiceImplV2 implements UserService{
 
 
     public User updateUser(Long id, User user){
-        return createUser(user);
+        User existing = getUserById(id);
+
+        // V2 CHANGE: only name can be updated
+        existing.setName(user.getName().toUpperCase());
+
+        // email is NOT updated in v2
+        return repo.save(existing);
     }
 
 
