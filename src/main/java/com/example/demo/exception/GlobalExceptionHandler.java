@@ -61,4 +61,15 @@ public class GlobalExceptionHandler {
                 "time", LocalDateTime.now()
         );
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, Object> handleIllegalArgument(IllegalArgumentException ex) {
+        return Map.of(
+                "status", 400,
+                "message", ex.getMessage(),
+                "time", LocalDateTime.now()
+        );
+    }
+
 }

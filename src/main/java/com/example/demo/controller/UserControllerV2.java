@@ -29,4 +29,31 @@ public class UserControllerV2 {
         User updatedUser = service.updateUser(id, user);
         return ResponseEntity.ok(updatedUser);
     }
+
+    @GetMapping
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok(service.getAllUsers());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> get(@PathVariable Long id) {
+        User user = service.getUserById(id);
+        return ResponseEntity.ok(user); // 200 OK
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        service.deleteUser(id);
+        return ResponseEntity.ok("User deleted successfully with id " + id);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<User> patch(
+            @PathVariable Long id,
+            @RequestBody User user) {
+
+        User patchedUser = service.patchUser(id, user);
+        return ResponseEntity.ok(patchedUser);
+    }
+
 }

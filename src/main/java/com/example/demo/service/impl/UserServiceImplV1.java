@@ -41,4 +41,11 @@ public class UserServiceImplV1 implements UserService {
     public void deleteUser(Long id){
         repo.deleteById(id);
     }
+
+    @Override
+    public User patchUser(Long id, User user) {
+        // V1 treats PATCH same as PUT
+        return updateUser(id, user);
+    }
+
 }
